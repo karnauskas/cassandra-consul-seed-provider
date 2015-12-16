@@ -20,19 +20,27 @@ import java.util.Map;
 public class ConsulSeedProvider implements SeedProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsulSeedProvider.class);
-    // todo: move prefix to config
-    final String prefix = "cassandra/seeds";
+    private String prefix = "cassandra/seeds";
     private URL consulUrl;
     private ConsulClient client;
     private JSONParser jsonParser = new JSONParser();
 
     public ConsulSeedProvider(final Map<String, String> args) {
+
         try {
             consulUrl = new URL(args.get("consul_url"));
             logger.info("Consul url: {}", consulUrl);
         } catch (Exception e) {
             logger.warn("Error getting consul_url: {}", e.getMessage());
         }
+
+        try {
+            prefix = args.get("consul_prefix");
+            logger.info("Consul prefix: {}", prefix);
+        } catch (Exception e) {
+            logger.warn("Error getting consul_prefix: {}", e.getMessage());
+        }
+
     }
 
     public List<InetAddress> getSeeds() {
@@ -60,6 +68,7 @@ public class ConsulSeedProvider implements SeedProvider {
         }
 
         return Collections.unmodifiableList(seeds);
+
     }
 
 }
