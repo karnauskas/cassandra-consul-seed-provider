@@ -3,7 +3,7 @@ sudo: false
 language: java
 
 script:
-  - mvn clean package
+  - mvn clean test package assembly:single
 
 notifications:
   email: false
