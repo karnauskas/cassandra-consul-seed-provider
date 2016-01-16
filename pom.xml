@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>lt.nkts</groupId>
   <artifactId>cassandra-consul-seed-provider</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -49,11 +49,6 @@
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <!--<archive>-->
-            <!--<manifest>-->
-              <!--<mainClass>fully.qualified.MainClass</mainClass>-->
-            <!--</manifest>-->
-          <!--</archive>-->
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
@@ -63,9 +58,6 @@
   </build>
   <repositories>
     <repository>
-      <!--<snapshots>-->
-      <!--<enabled>false</enabled>-->
-      <!--</snapshots>-->
       <id>central</id>
       <name>bintray</name>
       <url>http://jcenter.bintray.com</url>
