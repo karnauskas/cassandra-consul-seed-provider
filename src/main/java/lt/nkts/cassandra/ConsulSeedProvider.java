@@ -34,7 +34,6 @@ public class ConsulSeedProvider implements SeedProvider {
 
         try {
             config = DatabaseDescriptor.loadConfig();
-            logger.debug(config.seed_provider.toString());
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -58,7 +57,7 @@ public class ConsulSeedProvider implements SeedProvider {
         Response response = client.getKVValues(prefix);
         List all = (ArrayList<GetValue>) response.getValue();
         if (all == null) {
-            return new ArrayList();
+            return Collections.EMPTY_LIST;
         }
         List<InetAddress> seeds = new ArrayList<InetAddress>(all.size());
 
