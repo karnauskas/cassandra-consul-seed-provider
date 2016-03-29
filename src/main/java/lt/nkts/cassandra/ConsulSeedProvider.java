@@ -1,29 +1,28 @@
 package lt.nkts.cassandra;
 
 import com.ecwid.consul.v1.ConsulClient;
-import com.ecwid.consul.v1.QueryParams;
 import com.ecwid.consul.v1.Response;
 import com.ecwid.consul.v1.catalog.model.CatalogService;
 import com.ecwid.consul.v1.kv.model.GetValue;
-import org.apache.cassandra.locator.SeedProvider;
 import org.apache.cassandra.config.Config;
 import org.apache.cassandra.config.DatabaseDescriptor;
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
+import org.apache.cassandra.locator.SeedProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 
 public class ConsulSeedProvider implements SeedProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsulSeedProvider.class);
     private ConsulClient client;
-    private JSONParser jsonParser = new JSONParser();
 
     public ConsulSeedProvider(final Map<String, String> args) {
     }
