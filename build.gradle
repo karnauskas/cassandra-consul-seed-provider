@@ -1,6 +1,8 @@
 plugins {
   id 'java'
   id 'com.github.johnrengelman.shadow' version '1.2.3'
+  id 'net.saliman.cobertura' version '2.3.1'
+  id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
 version = '1.2.0'
@@ -33,3 +35,5 @@ configurations {
   runtime.exclude module: 'log4j-over-slf4j'
   runtime.exclude module: 'jcl-over-slf4j'
 }
+
+cobertura.coverageFormats = ['html', 'xml']
