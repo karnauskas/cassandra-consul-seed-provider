@@ -5,5 +5,8 @@ language: java
 script:
   - gradle shadowJar
 
+after_success:
+  - coveralls
+
 notifications:
   email: false
