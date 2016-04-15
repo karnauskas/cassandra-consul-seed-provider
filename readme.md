@@ -1,20 +1,32 @@
-Configuration:
+### Build
+
+    gradle shadowJar
+    gradle jar
+
+### Configuration
+#### Generic
+
+Specify seed provider class in cassandra.yaml config file:
 
     seed_provider:
-        - class_name: lt.nkts.cassandra.ConsulSeedProvider
-          parameters:
-              - consul_url: http://localhost:8500
-              - consul_service: cassandra
-              - use_kv: false
-              - kv_prefix: cassandra/seeds
+      - class_name: lt.nkts.cassandra.ConsulSeedProvider
 
-If use_kv is enabled, provider will look for entries with kv_prefix prefix/namespace
-otherwise it will try to locate seed nodes from service discovery where service id is consul_service.
+Specify rest of parameters on command line as standart java properties.
 
-Set KV seed:
+If KV is enabled, provider will look for entries with kv_prefix prefix/namespace otherwise it will try to locate seed
+nodes from Consul service catalog.
 
-    curl -XPUT localhost:8500/v1/kv/cassandra/seeds/some-seed-server.example.com
+#### KV
 
-Build:
+    -Dconsul.kv.disabled=false -Dconsul.kv.prefix='cassandra/seeds'
 
-    mvn clean compile assembly:single
+
+#### Service
+
+
+    -Dconsul.url='http://localhost:8500/' -Dconsul.service.tags=tag1 -Dconsul.service.name=cassandra ..
+
+#### Seeding KV storage
+
+    curl -XPUT localhost:8500/v1/kv/cassandra/seeds/192.168.15.15
+

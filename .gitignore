@@ -3,3 +3,6 @@ target
 test
 .idea
 *.iml
+build
+.gradle
+lib

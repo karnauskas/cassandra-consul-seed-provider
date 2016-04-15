@@ -1,0 +1,35 @@
+plugins {
+  id 'java'
+  id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+
+version = '1.2.0'
+group = 'lt.nkts'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile 'org.apache.cassandra:cassandra-all:3.4'
+  compile 'com.ecwid.consul:consul-api:1.1.9'
+  compile 'org.apache.commons:commons-collections4:4.0'
+  compile 'com.google.guava:guava:19.0'
+}
+
+shadowJar {
+  mergeServiceFiles()
+  exclude 'META-INF/*.DSA'
+  exclude 'META-INF/*.RSA'
+}
+
+configurations {
+  runtime.exclude module: 'logback-core'
+  runtime.exclude module: 'logback-classic'
+  runtime.exclude module: 'slf4j-api'
+  runtime.exclude module: 'log4j-over-slf4j'
+  runtime.exclude module: 'jcl-over-slf4j'
+}

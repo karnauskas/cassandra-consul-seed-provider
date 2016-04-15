@@ -3,7 +3,7 @@ sudo: false
 language: java
 
 script:
-  - mvn clean test package assembly:single
+  - gradle shadowJar
 
 notifications:
   email: false
