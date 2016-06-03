@@ -77,29 +77,25 @@ public class ConsulSeedProvider implements SeedProvider {
             Response<List<CatalogService>> response = client.getCatalogService(consul_service_name, null);
 
             for (CatalogService svc : response.getValue()) {
+                try {
+                    logger.debug("Service [{}]", svc.toString());
 
-                if (svc.getServiceId().equals(consul_service_name)) {
-                    try {
-                        logger.debug("Service [{}]", svc.toString());
+                    if (CollectionUtils.isNotEmpty(consul_service_tags)) {
+                        List<String> stags = svc.getServiceTags();
 
-                        if (CollectionUtils.isNotEmpty(consul_service_tags)) {
-                            List<String> stags = svc.getServiceTags();
+                        logger.debug("Service tagged with {}", stags.toString());
+                        logger.debug("I'm looking for {}", consul_service_tags.toString());
 
-                            logger.debug("Service tagged with {}", stags.toString());
-                            logger.debug("I'm looking for {}", consul_service_tags.toString());
-
-                            if (CollectionUtils.containsAll(stags, consul_service_tags)) {
-                                seeds.add(InetAddress.getByName(svc.getServiceAddress()));
-                            }
-                        } else {
+                        if (CollectionUtils.containsAll(stags, consul_service_tags)) {
                             seeds.add(InetAddress.getByName(svc.getServiceAddress()));
                         }
-
-                    } catch (Exception e) {
-                        logger.warn("Adding seed {}", e.getMessage());
+                    } else {
+                        seeds.add(InetAddress.getByName(svc.getServiceAddress()));
                     }
-                }
 
+                } catch (Exception e) {
+                    logger.warn("Adding seed {}", e.getMessage());
+                }
             }
         }
 
