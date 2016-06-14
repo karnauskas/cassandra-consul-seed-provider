@@ -24,7 +24,7 @@ nodes from Consul service catalog.
 #### Service
 
 
-    -Dconsul.url='http://localhost:8500/' -Dconsul.service.tags=tag1 -Dconsul.service.name=cassandra ..
+    -Dconsul.url=http://localhost:8500/ -Dconsul.service.tags=tag1 -Dconsul.service.name=cassandra ..
 
 #### Seeding KV storage
 
