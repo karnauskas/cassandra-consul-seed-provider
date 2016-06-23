@@ -1,5 +1,11 @@
 ### Build
 
+Before building, make sure that the Cassandra dependency version matches your version :
+
+	compile 'org.apache.cassandra:cassandra-all:3.7'
+
+Then build: 
+
     gradle shadowJar
     gradle jar
 
@@ -18,7 +24,7 @@ nodes from Consul service catalog.
 
 #### KV
 
-    -Dconsul.kv.disabled=false -Dconsul.kv.prefix='cassandra/seeds'
+    -Dconsul.kv.enabled=true -Dconsul.kv.prefix=cassandra/seeds
 
 
 #### Service
