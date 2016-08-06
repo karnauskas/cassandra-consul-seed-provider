@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
   compile 'org.apache.cassandra:cassandra-all:3.7'
-  compile 'com.ecwid.consul:consul-api:1.1.9'
+  compile 'com.ecwid.consul:consul-api:1.1.11'
   compile 'org.apache.commons:commons-collections4:4.0'
   compile 'com.google.guava:guava:19.0'
 }
