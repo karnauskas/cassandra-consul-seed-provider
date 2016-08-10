@@ -27,8 +27,22 @@ public class ConsulSeedProvider implements SeedProvider {
     private String consul_kv_prefix;
     private String consul_service_name;
     private Collection<String> consul_service_tags;
+    private List<InetAddress> default_seeds;
 
     public ConsulSeedProvider(Map<String, String> args) {
+        // These are used as a fallback if we get nothing from Consul
+        default_seeds = new ArrayList<InetAddress>();
+        String seeds = args.get("seeds");
+        if (seeds != null) {
+            for (String host : Splitter.on(",").trimResults().omitEmptyStrings().split(seeds)) {
+                try {
+                    default_seeds.add(InetAddress.getByName(host));
+                } catch (UnknownHostException ex) {
+                    logger.warn("Seed provider couldn't lookup host " + host);
+                }
+            }
+        }
+
         try {
             consul_url = new URL(System.getProperty("consul.url", "http://localhost:8500/"));
             consul_use_kv = BooleanUtils.toBoolean(System.getProperty("consul.kv.enabled", "false"), "true", "false");
@@ -45,6 +59,7 @@ public class ConsulSeedProvider implements SeedProvider {
         logger.debug("consul_service_tags size [{}]", consul_service_tags.size());
         logger.debug("consul_use_kv {}", consul_use_kv);
         logger.debug("consul_kv_prefix {}", consul_kv_prefix);
+        logger.debug("default_seeds {}", default_seeds);
     }
 
     public List<InetAddress> getSeeds() {
@@ -56,7 +71,7 @@ public class ConsulSeedProvider implements SeedProvider {
             Response response = client.getKVValues(consul_kv_prefix);
             List all = (ArrayList<GetValue>) response.getValue();
             if (all == null) {
-                return Collections.EMPTY_LIST;
+                return Collections.unmodifiableList(default_seeds);
             }
 
             for (Object gv : all) {
@@ -98,11 +113,11 @@ public class ConsulSeedProvider implements SeedProvider {
                 }
             }
         }
-
-        if (seeds.size() > 0) {
-            logger.info("Seeds {}", seeds.toString());
+        if (seeds.isEmpty()) {
+            // We got nothing from Consul so add default seeds
+            seeds.addAll(default_seeds);
         }
-
+        logger.info("Seeds {}", seeds.toString());
         return Collections.unmodifiableList(seeds);
     }
 }
