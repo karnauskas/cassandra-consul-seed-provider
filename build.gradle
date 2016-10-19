@@ -5,7 +5,7 @@ plugins {
   id 'com.github.kt3k.coveralls' version '2.6.3'
 }
 
-version = '1.2.1'
+version = '1.2.2'
 group = 'lt.nkts'
 
 sourceCompatibility = 1.6

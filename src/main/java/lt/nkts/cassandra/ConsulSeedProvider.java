@@ -26,6 +26,7 @@ public class ConsulSeedProvider implements SeedProvider {
     private Boolean consul_use_kv;
     private String consul_kv_prefix;
     private String consul_service_name;
+    private String consul_acl_token;
     private Collection<String> consul_service_tags;
 
     public ConsulSeedProvider(Map<String, String> args) {
@@ -35,6 +36,7 @@ public class ConsulSeedProvider implements SeedProvider {
             consul_kv_prefix = System.getProperty("consul.kv.prefix", "cassandra/seeds");
             consul_service_name = System.getProperty("consul.service.name", "cassandra");
             consul_service_tags = Splitter.on(",").trimResults().omitEmptyStrings().splitToList(System.getProperty("consul.service.tags", ""));
+            consul_acl_token = System.getProperty("consul.acl.token", "anonymous");
         } catch (Exception e) {
             logger.error(e.toString());
         }
@@ -45,6 +47,7 @@ public class ConsulSeedProvider implements SeedProvider {
         logger.debug("consul_service_tags size [{}]", consul_service_tags.size());
         logger.debug("consul_use_kv {}", consul_use_kv);
         logger.debug("consul_kv_prefix {}", consul_kv_prefix);
+        logger.debug("consul_acl_token {}", consul_acl_token);
     }
 
     public List<InetAddress> getSeeds() {
@@ -53,7 +56,7 @@ public class ConsulSeedProvider implements SeedProvider {
         List<InetAddress> seeds = new ArrayList<InetAddress>();
 
         if (consul_use_kv) {
-            Response response = client.getKVValues(consul_kv_prefix);
+            Response response = client.getKVValues(consul_kv_prefix, consul_acl_token);
             List all = (ArrayList<GetValue>) response.getValue();
             if (all == null) {
                 return Collections.EMPTY_LIST;
