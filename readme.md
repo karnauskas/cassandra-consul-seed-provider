@@ -26,6 +26,12 @@ nodes from Consul service catalog.
 
     -Dconsul.kv.enabled=true -Dconsul.kv.prefix=cassandra/seeds
 
+#### ACL
+
+If an acl token is required e.g. via EnvVar:
+
+    -Dconsul.acl.token=$CONSUL_ACL_TOKEN
+
 
 #### Service
 
