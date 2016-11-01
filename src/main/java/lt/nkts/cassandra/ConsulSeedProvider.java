@@ -71,17 +71,16 @@ public class ConsulSeedProvider implements SeedProvider {
         List<InetAddress> seeds = new ArrayList<InetAddress>();
 
         if (consul_use_kv) {
-            Response response = client.getKVValues(consul_kv_prefix, consul_acl_token);
-            List all = (ArrayList<GetValue>) response.getValue();
+            Response<List<GetValue>> response = client.getKVValues(consul_kv_prefix, consul_acl_token);
+            List<GetValue> all = response.getValue();
             if (all == null) {
                 return Collections.unmodifiableList(default_seeds);
             }
 
-            for (Object gv : all) {
+            for (GetValue gv : all) {
                 logger.info("kv: {}", gv);
 
-                GetValue record = (GetValue) gv;
-                String[] parts = record.getKey().split("/");
+                String[] parts = gv.getKey().split("/");
                 String host = parts[parts.length - 1];
 
                 try {
