@@ -3,6 +3,7 @@ sudo: false
 language: java
 
 script:
+  - gradle jar
   - gradle shadowJar
 
 after_success:
@@ -10,3 +11,14 @@ after_success:
 
 notifications:
   email: false
+
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: Y5/+2gjIRMZbELSplBZxIcFUFVUENHhhEFhSGI/eru6YckSxMu2vZNg9Lydn6KxlWu37QMNZ7NtLspH9Xfv98jTzTJB5TepzLGTPi6vbd9rXJS0shjZzDzIZNoBp9naM1nMh7QMScjZZcxxMyxn1/qDU/p9RXXt0FOVTRpfhRVZxvdwQNtqzwFbTkOrWhC9uEA1kCh9s0cD7nmOokAST1Wyz71xVkZxKdWLMzN+wvW6aeMCYLdHl6rsgzD8jyA8apkGvfEYOdTm6ZjbH/MO1jnAcRRsmX+eH+pUI0nzsGlLS29jlKT8vDoQsi8yyczMFgWhKD6hda44OU+MMjfgyHtAc2CMcCiFHhf7E+eUIWxtu2cFbF6yQTYZwf/hkqdQIV7BOobEIbL4E4Gp58hqkTRLgsoTTg5rVltnreMbvId5Yy6uZLTeu4+kNstjMFugJHHju5R8/arKfWc9/ZoDLqpS93sx7deQwBBsaKFuzE3JY0mOXnRWiAxdFMpXe1bdfBaej9WLxx6JU/0EwoGSGWClAGjLcjaG6IliooQQ7yKZ6Whs0zAmnXlLQD9ETOLwd6gjt/1yfHMmOzumNkzfIwvAXxiHVk33wPtODghNuiDTSrb1bVOCNe5L+UywFq+M5Qggykb4Iee1WPHvMz5OA90E+YTnta2RA9V5XYUQJv+Q=
+  file_glob: true
+  file: "build/libs/cassandra-consul-seed-provider-*.jar"
+  on:
+    repo: nkts/cassandra-consul-seed-provider
+    tags: true
