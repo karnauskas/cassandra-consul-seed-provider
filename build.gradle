@@ -1,11 +1,14 @@
 plugins {
-  id 'java'
-  id 'com.github.johnrengelman.shadow' version '1.2.3'
+  id 'findbugs'
+  id 'pmd'
+  id 'jdepend'
+  id "com.github.johnrengelman.shadow" version "1.2.4"
   id 'net.saliman.cobertura' version '2.3.1'
-  id 'com.github.kt3k.coveralls' version '2.6.3'
+  id 'com.github.kt3k.coveralls' version '2.7.1'
+  id 'com.github.ben-manes.versions' version '0.13.0'
 }
 
-version = '1.2.2'
+version = '1.2.3'
 group = 'lt.nkts'
 
 sourceCompatibility = 1.6
@@ -15,10 +18,13 @@ repositories {
   jcenter()
 }
 
+project.ext.cassversion = '3.9'
+
 dependencies {
-  compile 'org.apache.cassandra:cassandra-all:3.7'
+  compile "org.apache.cassandra:cassandra-all:${cassversion}"
   compile 'com.ecwid.consul:consul-api:1.1.9'
   compile 'org.apache.commons:commons-collections4:4.0'
+  compile 'org.kie.modules:org-apache-commons-lang3:6.5.0.Final'
   compile 'com.google.guava:guava:19.0'
 }
 
@@ -37,3 +43,24 @@ configurations {
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.2'
+}
+
+findbugsMain {
+  ignoreFailures = true
+  effort = "max"
+  reports {
+    xml.enabled = true
+    html.enabled = false
+  }
+}
+
+pmd {
+  ignoreFailures = true
+}
+
+tasks.coveralls {
+  dependsOn 'check', 'cobertura'
+}
