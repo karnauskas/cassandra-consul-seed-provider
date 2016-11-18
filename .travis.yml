@@ -1,16 +1,28 @@
 sudo: false
 
+addons:
+  code_climate:
+    repo_token: 41ade8a62a381902d310cdec48fbc15ffc35b5a2ab4fb9b5b20068da1fdbf874
+
 language: java
+
+before_script:
+  - gradle --version
 
 script:
   - gradle jar
   - gradle shadowJar
 
 after_success:
-  - coveralls
+  - gradle cobertura
+  - gradle coveralls
 
 notifications:
   email: false
+
+cache:
+  directories:
+    - $HOME/.m2
 
 deploy:
   provider: releases

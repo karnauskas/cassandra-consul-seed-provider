@@ -20,8 +20,6 @@ public class ConsulSeedProvider implements SeedProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsulSeedProvider.class);
 
-    private ConsulClient client;
-
     private URL consul_url;
     private Boolean consul_use_kv;
     private String consul_kv_prefix;
@@ -66,7 +64,7 @@ public class ConsulSeedProvider implements SeedProvider {
     }
 
     public List<InetAddress> getSeeds() {
-        client = new ConsulClient(String.format("%s:%s", consul_url.getHost(), consul_url.getPort()));
+        ConsulClient client = new ConsulClient(String.format("%s:%s", consul_url.getHost(), consul_url.getPort()));
 
         List<InetAddress> seeds = new ArrayList<InetAddress>();
 
