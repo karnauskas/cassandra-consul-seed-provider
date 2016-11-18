@@ -6,16 +6,16 @@ addons:
 
 language: java
 
-before_script:
-  - gradle --version
+install:
+  - ./gradlew --version
 
 script:
-  - gradle jar
-  - gradle shadowJar
+  - ./gradlew test
+  - ./gradlew jar
+  - ./gradlew shadowJar
 
 after_success:
-  - gradle cobertura
-  - gradle coveralls
+  - ./gradlew coveralls
 
 notifications:
   email: false
