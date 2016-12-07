@@ -75,7 +75,9 @@ public class ConsulSeedProvider implements SeedProvider {
     }
 
     private  List<InetAddress> getSeedsFromConsul(){
-        client = new ConsulClient(String.format("%s:%s", consul_url.getHost(), consul_url.getPort()));
+        if (client == null) {
+            client = new ConsulClient(String.format("%s:%s", consul_url.getHost(), consul_url.getPort()));
+        }
 
         List<InetAddress> seeds = new ArrayList<InetAddress>();
 
