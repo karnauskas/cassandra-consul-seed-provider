@@ -1,6 +1,6 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>lt.nkts</groupId>
+  <groupId>lt.nkts.cassandra</groupId>
   <artifactId>cassandra-consul-seed-provider</artifactId>
   <version>1.2.3</version>
 
@@ -23,17 +23,6 @@
       <groupId>com.ecwid.consul</groupId>
       <artifactId>consul-api</artifactId>
       <version>${consul-api-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-collections4</artifactId>
-      <version>4.1</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>18.0</version>
-      <scope>provided</scope>
     </dependency>
   </dependencies>
 
