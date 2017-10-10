@@ -1,24 +1,12 @@
 sudo: false
 
-addons:
-  code_climate:
-    repo_token: 41ade8a62a381902d310cdec48fbc15ffc35b5a2ab4fb9b5b20068da1fdbf874
-
 language: java
 
-jdk:
-  - openjdk7
-
-install:
-  - ./gradlew --version
-
 script:
-  - ./gradlew test
-  - ./gradlew jar
-  - ./gradlew shadowJar
+  - gradlew shadowJar
 
 after_success:
-  - ./gradlew coveralls
+  - coveralls
 
 notifications:
   email: false
@@ -41,5 +29,5 @@ deploy:
   file_glob: true
   file: "build/libs/cassandra-consul-seed-provider-*.jar"
   on:
-    repo: nkts/cassandra-consul-seed-provider
+    repo: karnauskas/cassandra-consul-seed-provider
     tags: true
