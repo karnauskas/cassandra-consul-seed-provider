@@ -33,13 +33,16 @@ public class ConsulSeedProvider implements SeedProvider {
     public ConsulSeedProvider(Map<String, String> args) {
         // These are used as a fallback if we get nothing from Consul
         default_seeds = new ArrayList<InetAddress>();
-        String seeds = args.get("seeds");
-        if (seeds != null) {
-            for (String host : Splitter.on(",").trimResults().omitEmptyStrings().split(seeds)) {
-                try {
-                    default_seeds.add(InetAddress.getByName(host));
-                } catch (UnknownHostException ex) {
-                    logger.warn("Seed provider couldn't lookup host " + host);
+
+        if (args != null) {
+            String seeds = args.get("seeds");
+            if (seeds != null) {
+                for (String host : Splitter.on(",").trimResults().omitEmptyStrings().split(seeds)) {
+                    try {
+                        default_seeds.add(InetAddress.getByName(host));
+                    } catch (UnknownHostException ex) {
+                        logger.warn("Seed provider couldn't lookup host " + host);
+                    }
                 }
             }
         }
