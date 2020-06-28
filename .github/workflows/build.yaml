@@ -5,7 +5,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-    run-os: ${{ matrix.os }}
+    runs-os: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
