@@ -24,4 +24,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: jars
-          path: target/*.jar
+          path: "target/*.jar"
