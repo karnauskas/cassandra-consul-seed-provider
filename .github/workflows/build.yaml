@@ -1,12 +1,10 @@
 name: Build
-on: [push, pull_request]
-jobs:
-  gradle:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-    runs-os: ${{ matrix.os }}
 
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
