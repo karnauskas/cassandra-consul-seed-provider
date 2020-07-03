@@ -6,6 +6,26 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - run: mvn -B -ff clean package
+      - uses: actions/upload-artifact@v2
+        with:
+          name: jars
+          path: target/*.jar
+
+  test:
+    name: Integration test
+    runs-on: ubuntu-latest
     services:
       consul:
         image: consul:1.8.0
@@ -20,8 +40,4 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - run: mvn -B package --file pom.xml
-      - uses: actions/upload-artifact@v2
-        with:
-          name: jars
-          path: target/*.jar
+      - run: mvn -B -ff clean test
