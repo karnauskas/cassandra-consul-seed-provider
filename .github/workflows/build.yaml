@@ -6,6 +6,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    services:
+      consul:
+        image: consul:1.8.0
     steps:
       - uses: actions/checkout@v2
       - uses: actions/cache@v2
