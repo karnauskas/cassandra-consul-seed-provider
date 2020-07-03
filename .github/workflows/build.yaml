@@ -21,7 +21,7 @@ jobs:
         with:
           java-version: 11
       - run: mvn -B package --file pom.xml
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v2
         with:
           name: jars
-          path: "target/*.jar"
+          path: target/*.jar
