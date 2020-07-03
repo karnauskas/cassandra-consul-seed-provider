@@ -1,3 +1,5 @@
+![Build](https://github.com/karnauskas/cassandra-consul-seed-provider/workflows/Build/badge.svg)
+
 ### Build
 
 Before building, make sure that the Cassandra dependency version matches your version :
@@ -41,4 +43,3 @@ If an acl token is required e.g. via EnvVar:
 #### Seeding KV storage
 
     curl -XPUT localhost:8500/v1/kv/cassandra/seeds/192.168.15.15
-
