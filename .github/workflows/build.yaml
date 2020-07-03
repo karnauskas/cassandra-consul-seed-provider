@@ -1,7 +1,7 @@
 name: Build
-
-on: [push, pull_request]
-
+on:
+  - push
+  - pull_request
 jobs:
   build:
     name: Build
@@ -21,3 +21,7 @@ jobs:
         with:
           java-version: 11
       - run: mvn -B package --file pom.xml
+      - uses: actions/upload-artifact@v1
+        with:
+          name: jars
+          path: target/*.jar
