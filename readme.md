@@ -2,14 +2,7 @@
 
 ### Build
 
-Before building, make sure that the Cassandra dependency version matches your version :
-
-	compile 'org.apache.cassandra:cassandra-all:3.7'
-
-Then build:
-
-    gradle shadowJar
-    gradle jar
+    mvn clean verify package
 
 ### Configuration
 #### Generic
