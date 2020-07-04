@@ -11,4 +11,6 @@ jobs:
         with:
           java-version: 11
       - uses: karnauskas/codequality-action/infer@infer
-        run: mvn -ff -B verify
+        with:
+          cmd: |
+            run -- mvn clean package
