@@ -5,7 +5,7 @@
   <version>1.2.3</version>
 
   <properties>
-    <cassandra-version>3.11.6</cassandra-version>
+    <cassandra-version>3.11.8</cassandra-version>
     <consul-api-version>1.2.2</consul-api-version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
