@@ -70,4 +70,4 @@ jobs:
           check-latest: true
 
       - run: |
-          mvn -B -ff clean test check
+          mvn -B -ff clean test
