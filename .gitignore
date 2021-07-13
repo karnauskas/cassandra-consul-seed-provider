@@ -6,6 +6,7 @@
 .vscode/
 *.iml
 *.jar
+*.properties
 bin/
 build
 infer-out/

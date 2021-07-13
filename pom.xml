@@ -1,18 +1,25 @@
 <project>
   <modelVersion>4.0.0</modelVersion>
+
   <groupId>lt.nkts.cassandra</groupId>
   <artifactId>cassandra-consul-seed-provider</artifactId>
   <version>1.2.3</version>
 
   <properties>
-    <cassandra-version>3.11.8</cassandra-version>
-    <consul-api-version>1.2.2</consul-api-version>
+    <cassandra-version>3.11.7</cassandra-version>
+    <consul-api-version>1.4.1</consul-api-version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
+    <!-- <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency> -->
     <dependency>
       <groupId>org.apache.cassandra</groupId>
       <artifactId>cassandra-all</artifactId>
@@ -30,7 +37,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.0.0</version>
+        <version>3.3.0</version>
         <configuration>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
@@ -46,6 +53,91 @@
           </execution>
         </executions>
       </plugin>
+      <!-- <plugin>
+        <groupId>com.anthemengineering.mojo</groupId>
+        <artifactId>infer-maven-plugin</artifactId>
+        <version>0.1.0</version>
+        <configuration>
+            <consoleOut>true</consoleOut>
+        </configuration>
+        <executions>
+            <execution>
+                <phase>verify</phase>
+                <id>infer</id>
+                <goals>
+                    <goal>infer</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin> -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>4.0.4</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>4.1.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <sourceEncoding>utf-8</sourceEncoding>
+          <excludeRoots>
+            <excludeRoot>target</excludeRoot>
+          </excludeRoots>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>net.revelc.code.formatter</groupId>
+        <artifactId>formatter-maven-plugin</artifactId>
+        <version>2.12.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <!-- <configLocation>google_checks.xml</configLocation> -->
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <!-- <failsOnError>true</failsOnError> -->
+          <!-- <linkXRef>false</linkXRef> -->
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+      <!-- <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin> -->
+      <!-- <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>3.1.1</version>
+        <configuration>
+          <configLocation>google_checks.xml</configLocation>
+          <encoding>UTF-8</encoding>
+          <consoleOutput>true</consoleOutput>
+          <failsOnError>true</failsOnError>
+          <linkXRef>false</linkXRef>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin> -->
+    </plugins>
+  </reporting>
 </project>
