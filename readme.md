@@ -2,7 +2,7 @@
 
 ### Build
 
-    mvn clean verify package
+    gradle clean jar shadowjar --warning-mode all
 
 ### Configuration
 #### Generic

@@ -14,26 +14,14 @@ jobs:
           java-version: 11
           check-latest: true
 
-#      - run: |
-#          mvn -B -ff checkstyle:checkstyle
-#
-#      - run: |
-#          mvn pmd:cpd-check
-#          mvn pmd:check
-#
-#      - run: |
-#          mvn spotbugs:check
-#
-#      - run: |
-#          mvn test
+      - uses: gradle/wrapper-validation-action@v1
 
-      - run: |
-          mvn -B -ff clean package
+      - run: gradle clean jar shadowjar --warning-mode all
 
       - uses: actions/upload-artifact@v2
         with:
           name: jars
-          path: target/*.jar
+          path: build/libs/*.jar
 
   test:
     runs-on: ubuntu-latest
@@ -51,25 +39,4 @@ jobs:
           java-version: 11
           check-latest: true
 
-      - run: |
-          mvn -B -ff clean test
-
-  gradle:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-java@v2
-        with:
-          distribution: adopt
-          java-version: 11
-          check-latest: true
-
-      - uses: gradle/wrapper-validation-action@v1
-
-      - run: gradle clean jar shadowjar --warning-mode all
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: jars
-          path: build/libs/*.jar
+      - run: gradle test
