@@ -14,18 +14,18 @@ jobs:
           java-version: 11
           check-latest: true
 
-      - run: |
-          mvn -B -ff checkstyle:checkstyle
-
-      - run: |
-          mvn pmd:cpd-check
-          mvn pmd:check
-
-      - run: |
-          mvn spotbugs:check
-
-      - run: |
-          mvn test
+#      - run: |
+#          mvn -B -ff checkstyle:checkstyle
+#
+#      - run: |
+#          mvn pmd:cpd-check
+#          mvn pmd:check
+#
+#      - run: |
+#          mvn spotbugs:check
+#
+#      - run: |
+#          mvn test
 
       - run: |
           mvn -B -ff clean package
