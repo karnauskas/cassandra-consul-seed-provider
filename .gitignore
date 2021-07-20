@@ -1,12 +1,12 @@
 .cache
 .classpath
-.gradle
 .idea
+.gradle
 .project
 .settings/
 .vscode/
 *.iml
-*.jar
+!gradle/*.jar
 *.properties
 bin/
 build
@@ -14,5 +14,3 @@ infer-out/
 lib
 target
 test
-#gradlew
-gradlew.bat
