@@ -7,19 +7,20 @@
 
   <properties>
     <cassandra-version>3.11.10</cassandra-version>
-    <consul-api-version>1.4.1</consul-api-version>
+    <consul-api-version>1.4.5</consul-api-version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>maven</id>
+      <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+  </repositories>
+
   <dependencies>
-    <!-- <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency> -->
     <dependency>
       <groupId>org.apache.cassandra</groupId>
       <artifactId>cassandra-all</artifactId>
@@ -53,23 +54,6 @@
           </execution>
         </executions>
       </plugin>
-      <!-- <plugin>
-        <groupId>com.anthemengineering.mojo</groupId>
-        <artifactId>infer-maven-plugin</artifactId>
-        <version>0.1.0</version>
-        <configuration>
-            <consoleOut>true</consoleOut>
-        </configuration>
-        <executions>
-            <execution>
-                <phase>verify</phase>
-                <id>infer</id>
-                <goals>
-                    <goal>infer</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin> -->
       <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
@@ -103,41 +87,12 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>3.1.2</version>
         <configuration>
-          <!-- <configLocation>google_checks.xml</configLocation> -->
-          <encoding>UTF-8</encoding>
-          <consoleOutput>true</consoleOutput>
-          <!-- <failsOnError>true</failsOnError> -->
-          <!-- <linkXRef>false</linkXRef> -->
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <reporting>
-    <plugins>
-      <!-- <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId>
-        <version>3.0.0</version>
-      </plugin> -->
-      <!-- <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <configLocation>google_checks.xml</configLocation>
           <encoding>UTF-8</encoding>
           <consoleOutput>true</consoleOutput>
           <failsOnError>true</failsOnError>
           <linkXRef>false</linkXRef>
         </configuration>
-        <reportSets>
-          <reportSet>
-            <reports>
-              <report>checkstyle</report>
-            </reports>
-          </reportSet>
-        </reportSets>
-      </plugin> -->
+      </plugin>
     </plugins>
-  </reporting>
+  </build>
 </project>

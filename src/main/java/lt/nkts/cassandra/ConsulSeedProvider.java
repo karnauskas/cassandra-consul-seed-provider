@@ -1,12 +1,14 @@
 package lt.nkts.cassandra;
 
 import com.ecwid.consul.v1.catalog.model.CatalogService;
+import com.ecwid.consul.v1.catalog.CatalogServiceRequest;
 import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.kv.model.GetValue;
 import com.ecwid.consul.v1.OperationException;
 import com.ecwid.consul.v1.Response;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.net.URL;
@@ -16,6 +18,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.cassandra.locator.SeedProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,7 +109,8 @@ public final class ConsulSeedProvider implements SeedProvider {
 
             // TODO change to additional if, Consul Catalog and Consul KV could work together at same time
         } else {
-            final Response<List<CatalogService>> response = client.getCatalogService(consulServiceName, null);
+            final CatalogServiceRequest csr = CatalogServiceRequest.newBuilder().build();
+            final Response<List<CatalogService>> response = client.getCatalogService(consulServiceName, csr);
 
             for (CatalogService svc : response.getValue()) {
                 try {
