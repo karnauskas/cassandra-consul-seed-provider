@@ -1,0 +1,18 @@
+plugins {
+  id 'com.github.johnrengelman.shadow' version '7.0.0'
+  id 'java'
+}
+
+repositories {
+  mavenCentral()
+}
+
+jar {
+  archiveBaseName = 'cassandra-consul-seed-provider'
+  archiveVersion = '1.2.3'
+}
+
+dependencies {
+  implementation "org.apache.cassandra:cassandra-all:3.11.10"
+  implementation "com.ecwid.consul:consul-api:1.4.5"
+}
