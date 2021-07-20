@@ -7,12 +7,14 @@ repositories {
   mavenCentral()
 }
 
-jar {
-  archiveBaseName = 'cassandra-consul-seed-provider'
-  archiveVersion = '1.2.3'
-}
-
 dependencies {
   implementation "org.apache.cassandra:cassandra-all:3.11.10"
   implementation "com.ecwid.consul:consul-api:1.4.5"
+}
+
+shadowJar {
+  archiveName = "${baseName}-${version}-${classifier}.${extension}"
+
+//  gradle 8.0
+//  archiveFileName = "${archiveBaseName}-${archiveVersion}-${archiveClassifier}.${archiveExtension}"
 }

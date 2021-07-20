@@ -67,4 +67,9 @@ jobs:
 
       - uses: gradle/wrapper-validation-action@v1
 
-      - run: gradle clean jar --warning-mode all
+      - run: gradle clean jar shadowjar --warning-mode all
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: jars
+          path: build/libs/*.jar
