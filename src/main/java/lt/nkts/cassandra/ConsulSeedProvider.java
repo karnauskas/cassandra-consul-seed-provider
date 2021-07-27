@@ -9,7 +9,6 @@ import com.ecwid.consul.v1.Response;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.cassandra.locator.InetAddressAndPort;
 import org.apache.cassandra.locator.SeedProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,17 +32,18 @@ public final class ConsulSeedProvider implements SeedProvider {
     private String consulServiceName;
     private String consulACLToken;
     private Collection<String> consulServiceTags;
-    private List<InetAddress> defaultSeeds;
+    private final List<InetAddressAndPort> defaultSeeds;
+    private final Splitter splitter = Splitter.on(",").trimResults().omitEmptyStrings();
 
     ConsulSeedProvider(final Map<String, String> args) {
-        defaultSeeds = new ArrayList<InetAddress>();
+        defaultSeeds = new ArrayList<>();
 
         if (args != null) {
             final String seeds = args.get("seeds");
             if (seeds != null) {
                 for (String host : Splitter.on(",").trimResults().omitEmptyStrings().split(seeds)) {
                     try {
-                        defaultSeeds.add(InetAddress.getByName(host));
+                        defaultSeeds.add(InetAddressAndPort.getByName(host));
                     } catch (UnknownHostException ex) {
                         LOGGER.warn("Seed provider couldn't lookup host " + host);
                     }
@@ -55,8 +56,7 @@ public final class ConsulSeedProvider implements SeedProvider {
             consulUseKV = Boolean.valueOf(System.getProperty("consul.kv.enabled", "false"));
             consulKVPrefix = System.getProperty("consul.kv.prefix", "cassandra/seeds");
             consulServiceName = System.getProperty("consul.service.name", "cassandra");
-            consulServiceTags = Splitter.on(",").trimResults().omitEmptyStrings()
-                    .splitToList(System.getProperty("consul.service.tags", ""));
+            consulServiceTags = splitter.splitToList(System.getProperty("consul.service.tags", ""));
             consulACLToken = System.getProperty("consul.acl.token", "anonymous");
             if (client == null) {
                 client = new ConsulClient(String.format("%s:%s", consulURL.getHost(), consulURL.getPort()));
@@ -75,7 +75,7 @@ public final class ConsulSeedProvider implements SeedProvider {
         LOGGER.debug("default_seeds {}", defaultSeeds);
     }
 
-    public List<InetAddress> getSeeds() {
+    public List<InetAddressAndPort> getSeeds() {
         try {
             return getSeedsFromConsul();
         } catch (OperationException oe) {
@@ -84,8 +84,8 @@ public final class ConsulSeedProvider implements SeedProvider {
         }
     }
 
-    private List<InetAddress> getSeedsFromConsul() {
-        List<InetAddress> seeds = new ArrayList<InetAddress>();
+    private List<InetAddressAndPort> getSeedsFromConsul() {
+        List<InetAddressAndPort> seeds = new ArrayList<>();
 
         if (consulUseKV) {
             final Response<List<GetValue>> response = client.getKVValues(consulKVPrefix, consulACLToken);
@@ -101,7 +101,7 @@ public final class ConsulSeedProvider implements SeedProvider {
                 String host = parts[parts.length - 1];
 
                 try {
-                    seeds.add(InetAddress.getByName(host));
+                    seeds.add(InetAddressAndPort.getByName(host));
                 } catch (UnknownHostException ex) {
                     LOGGER.warn("Seed provider couldn't lookup host {}", host);
                 }
@@ -126,10 +126,10 @@ public final class ConsulSeedProvider implements SeedProvider {
                         LOGGER.debug("I'm looking for {}", consulServiceTags.toString());
 
                         if (consulServiceTags.containsAll(stags) && stags.containsAll(consulServiceTags)) {
-                            seeds.add(InetAddress.getByName(address));
+                            seeds.add(InetAddressAndPort.getByName(address));
                         }
                     } else {
-                        seeds.add(InetAddress.getByName(address));
+                        seeds.add(InetAddressAndPort.getByName(address));
                     }
 
                 } catch (Exception e) {
@@ -143,7 +143,7 @@ public final class ConsulSeedProvider implements SeedProvider {
             seeds.addAll(defaultSeeds);
         }
 
-        LOGGER.info("Seeds {}", seeds.toString());
+        LOGGER.info("Seeds {}", seeds);
         return Collections.unmodifiableList(seeds);
     }
 }

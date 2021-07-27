@@ -6,6 +6,8 @@
 .settings/
 .vscode/
 *.iml
+*.ipr
+*.iws
 !gradle/*.jar
 *.properties
 bin/
