@@ -1,0 +1,21 @@
+plugins {
+  id 'com.github.johnrengelman.shadow' version '7.0.0'
+//  id 'com.palantir.shadow-jar' version '1.0.3'
+  id 'java'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  implementation "org.apache.cassandra:cassandra-all:3.11.10"
+  implementation "com.ecwid.consul:consul-api:1.4.5"
+}
+
+shadowJar {
+  archiveName = "${baseName}-${version}-${classifier}.${extension}"
+
+//  gradle 8.0
+//  archiveFileName = "${archiveBaseName}-${archiveVersion}-${archiveClassifier}.${archiveExtension}"
+}

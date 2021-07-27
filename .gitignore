@@ -1,12 +1,12 @@
 .cache
 .classpath
-.gradle
 .idea
+.gradle
 .project
 .settings/
 .vscode/
 *.iml
-*.jar
+!gradle/*.jar
 *.properties
 bin/
 build
