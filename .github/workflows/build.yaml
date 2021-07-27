@@ -39,4 +39,4 @@ jobs:
           distribution: adopt
           java-version: 11
           check-latest: true
-      - run: gradle test
+#      - run: gradle test
