@@ -33,6 +33,7 @@ public final class ConsulSeedProvider implements SeedProvider {
     private String consulACLToken;
     private Collection<String> consulServiceTags;
     private final List<InetAddressAndPort> defaultSeeds;
+    private final Splitter splitter = Splitter.on(",").trimResults().omitEmptyStrings();
 
     ConsulSeedProvider(final Map<String, String> args) {
         defaultSeeds = new ArrayList<>();
@@ -55,8 +56,7 @@ public final class ConsulSeedProvider implements SeedProvider {
             consulUseKV = Boolean.valueOf(System.getProperty("consul.kv.enabled", "false"));
             consulKVPrefix = System.getProperty("consul.kv.prefix", "cassandra/seeds");
             consulServiceName = System.getProperty("consul.service.name", "cassandra");
-            consulServiceTags = Splitter.on(",").trimResults().omitEmptyStrings()
-                    .splitToList(System.getProperty("consul.service.tags", ""));
+            consulServiceTags = splitter.splitToList(System.getProperty("consul.service.tags", ""));
             consulACLToken = System.getProperty("consul.acl.token", "anonymous");
             if (client == null) {
                 client = new ConsulClient(String.format("%s:%s", consulURL.getHost(), consulURL.getPort()));
