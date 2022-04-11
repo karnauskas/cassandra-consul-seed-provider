@@ -14,7 +14,7 @@ jobs:
           check-latest: true
       - uses: gradle/wrapper-validation-action@v1
       - run: gradle clean jar shadowjar --warning-mode all
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: jars
           path: build/libs/*.jar
