@@ -12,7 +12,7 @@ jobs:
           distribution: adopt
           java-version: 11
           check-latest: true
-      - uses: gradle/wrapper-validation-action@v1
+      - uses: gradle/wrapper-validation-action@v2
       - run: gradle clean jar shadowjar --warning-mode all
       - uses: actions/upload-artifact@v4
         with:
