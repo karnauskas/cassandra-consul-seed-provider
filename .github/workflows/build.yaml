@@ -22,7 +22,7 @@ jobs:
           check-latest: true
       - uses: gradle/wrapper-validation-action@f9c9c575b8b21b6485636a91ffecd10e558c62f6 # v3.5.0
       - run: gradle clean jar shadowjar --warning-mode all
-      - uses: actions/upload-artifact@50769540e7f4bd5e21e526ee35c689e35e0d6874 # v4.4.0
+      - uses: actions/upload-artifact@604373da6381bf24206979c74d06a550515601b9 # v4.4.1
         with:
           name: jars
           path: build/libs/*.jar
