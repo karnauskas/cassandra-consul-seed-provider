@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-  implementation "org.apache.cassandra:cassandra-all:5.0.1"
+  implementation "org.apache.cassandra:cassandra-all:5.0.2"
   implementation "com.ecwid.consul:consul-api:1.4.5"
 }
 
