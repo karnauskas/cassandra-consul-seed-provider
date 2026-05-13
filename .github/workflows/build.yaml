@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
         with:
           distribution: adopt
-          java-version: 11
+          java-version: 17
           check-latest: true
       - uses: gradle/wrapper-validation-action@f9c9c575b8b21b6485636a91ffecd10e558c62f6 # v3.5.0
       - run: gradle clean jar shadowjar --warning-mode all
@@ -50,6 +50,6 @@ jobs:
       - uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
         with:
           distribution: adopt
-          java-version: 11
+          java-version: 17
           check-latest: true
 #      - run: gradle test
