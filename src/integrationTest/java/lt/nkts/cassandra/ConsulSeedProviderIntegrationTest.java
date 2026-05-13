@@ -13,6 +13,7 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.cassandra.locator.InetAddressAndPort;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -122,11 +123,15 @@ class ConsulSeedProviderIntegrationTest {
 
     private static void registerService(String id, String name, String address, List<String> tags)
             throws IOException, InterruptedException {
+        if (tags.isEmpty()) {
+            throw new IllegalArgumentException("tags must not be empty");
+        }
+        String tagsJson = tags.stream().map(tag -> "\"" + tag + "\"").collect(Collectors.joining(","));
         String payload = String.format(
-                "{\"ID\":\"%s\",\"Name\":\"%s\",\"Address\":\"%s\",\"Port\":9042,\"Tags\":[\"%s\",\"%s\"]}",
-                id, name, address, tags.get(0), tags.get(1));
+                "{\"ID\":\"%s\",\"Name\":\"%s\",\"Address\":\"%s\",\"Port\":9042,\"Tags\":[%s]}",
+                id, name, address, tagsJson);
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(consulUrl() + "v1/agent/service/register"))
+                .uri(consulApiUri("v1/agent/service/register"))
                 .timeout(Duration.ofSeconds(20))
                 .header("Content-Type", "application/json")
                 .PUT(HttpRequest.BodyPublishers.ofString(payload))
@@ -137,7 +142,7 @@ class ConsulSeedProviderIntegrationTest {
 
     private static void putKv(String key, String value) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(consulUrl() + "v1/kv/" + key))
+                .uri(consulApiUri("v1/kv/" + key))
                 .timeout(Duration.ofSeconds(20))
                 .PUT(HttpRequest.BodyPublishers.ofString(value))
                 .build();
@@ -147,6 +152,11 @@ class ConsulSeedProviderIntegrationTest {
 
     private static String consulUrl() {
         return "http://" + CONSUL.getHost() + ":" + CONSUL.getMappedPort(8500) + "/";
+    }
+
+    private static URI consulApiUri(String path) {
+        String normalizedPath = path.startsWith("/") ? path.substring(1) : path;
+        return URI.create(consulUrl() + normalizedPath);
     }
 
     private static InetAddressAndPort host(String value) throws UnknownHostException {
