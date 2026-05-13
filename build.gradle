@@ -11,8 +11,15 @@ repositories {
 dependencies {
   implementation "org.apache.cassandra:cassandra-all:5.0.6"
   implementation "com.ecwid.consul:consul-api:1.4.5"
+  testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
+  testImplementation "org.mockito:mockito-core:5.11.0"
+  testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
 }
 
 shadowJar {
   archiveFileName = "${archiveBaseName}-${archiveVersion}-${archiveClassifier}.${archiveExtension}"
+}
+
+test {
+  useJUnitPlatform()
 }
