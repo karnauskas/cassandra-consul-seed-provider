@@ -123,9 +123,6 @@ class ConsulSeedProviderIntegrationTest {
 
     private static void registerService(String id, String name, String address, List<String> tags)
             throws IOException, InterruptedException {
-        if (tags.isEmpty()) {
-            throw new IllegalArgumentException("tags must not be empty");
-        }
         String tagsJson = tags.stream().map(tag -> "\"" + tag + "\"").collect(Collectors.joining(","));
         String payload = String.format(
                 "{\"ID\":\"%s\",\"Name\":\"%s\",\"Address\":\"%s\",\"Port\":9042,\"Tags\":[%s]}",

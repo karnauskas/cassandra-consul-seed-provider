@@ -26,7 +26,11 @@ dependencies {
   integrationTestImplementation "org.testcontainers:testcontainers:1.20.4"
   integrationTestImplementation "org.testcontainers:junit-jupiter:1.20.4"
   integrationTestImplementation "org.testcontainers:cassandra:1.20.4"
-  integrationTestImplementation "com.google.guava:guava:32.0.1-jre"
+  constraints {
+    integrationTestImplementation("com.google.guava:guava:32.0.1-jre") {
+      because "Cassandra 5 requires HostAndPort#getHost which is missing in older Guava versions"
+    }
+  }
 }
 
 shadowJar {
