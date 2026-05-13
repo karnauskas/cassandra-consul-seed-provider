@@ -8,12 +8,25 @@ repositories {
   mavenCentral()
 }
 
+sourceSets {
+  integrationTest {
+    java.srcDir file('src/integrationTest/java')
+    resources.srcDir file('src/integrationTest/resources')
+    compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
+    runtimeClasspath += output + compileClasspath
+  }
+}
+
 dependencies {
   implementation "org.apache.cassandra:cassandra-all:5.0.6"
   implementation "com.ecwid.consul:consul-api:1.4.5"
   testImplementation "org.junit.jupiter:junit-jupiter:5.10.2"
   testImplementation "org.mockito:mockito-core:5.11.0"
   testRuntimeOnly "org.junit.platform:junit-platform-launcher:1.10.2"
+  integrationTestImplementation "org.testcontainers:testcontainers:1.20.4"
+  integrationTestImplementation "org.testcontainers:junit-jupiter:1.20.4"
+  integrationTestImplementation "org.testcontainers:cassandra:1.20.4"
+  integrationTestImplementation "com.google.guava:guava:32.0.1-jre"
 }
 
 shadowJar {
@@ -21,5 +34,14 @@ shadowJar {
 }
 
 test {
+  useJUnitPlatform()
+}
+
+tasks.register('integrationTest', Test) {
+  description = 'Runs integration tests.'
+  group = 'verification'
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  shouldRunAfter test
   useJUnitPlatform()
 }

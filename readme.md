@@ -4,6 +4,12 @@
 
     gradle clean jar shadowjar --warning-mode all
 
+### Integration tests
+
+Integration tests spin up a Consul container and a 2-node Cassandra cluster using Testcontainers:
+
+    gradle integrationTest
+
 ### Configuration
 #### Generic
 
