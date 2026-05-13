@@ -1,5 +1,5 @@
 plugins {
-  id 'com.github.johnrengelman.shadow' version '8.1.1'
+  id 'com.gradleup.shadow' version '9.4.1'
   id 'idea'
   id 'java'
 }
@@ -31,10 +31,6 @@ dependencies {
       because "Cassandra 5 requires HostAndPort#getHost which is missing in older Guava versions"
     }
   }
-}
-
-shadowJar {
-  archiveFileName = "${archiveBaseName}-${archiveVersion}-${archiveClassifier}.${archiveExtension}"
 }
 
 test {
